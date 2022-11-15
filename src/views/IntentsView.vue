@@ -1,5 +1,9 @@
 <template>
   <!-- Page Heading -->
+  <add-intent-modal
+    :show="showModel"
+    @close="() => (showModel = false)"
+  ></add-intent-modal>
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Intents Configurations</h1>
     {{ errorMessage }}
@@ -16,7 +20,11 @@
           class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
         >
           <h6 class="m-0 font-weight-bold text-primary">Intents</h6>
-          <a href="#" class="btn btn-success pull-right">
+          <a
+            href="#"
+            @click="() => (showModel = true)"
+            class="btn btn-success pull-right"
+          >
             <i class="fas fa-solid fa-plus"></i>
           </a>
         </div>
@@ -88,12 +96,13 @@
 <script setup>
 import IntentCard from "../components/IntentCard.vue";
 import InfoCard from "../components/InfoCard.vue";
+import AddIntentModal from "../components/AddIntentModal.vue";
 import { useIntents } from "../stores/intents";
 import { storeToRefs } from "pinia";
 import { onMounted, ref } from "vue";
 import Swal from "sweetalert2";
-
 let activeId = ref("");
+let showModel = ref(false);
 const intentsStore = useIntents();
 
 const {
